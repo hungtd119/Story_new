@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,14 +13,9 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         try {
-            $request->validate([
-                'email' => 'email|required',
-                'password' => 'required'
-            ]);
-
             $credentials = request(['email', 'password']);
 
             if (!Auth::attempt($credentials)) {
@@ -49,25 +46,9 @@ class AuthController extends Controller
             ]);
         }
     }
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         try {
-            //Validated
-            $validateUser = Validator::make($request->all(),
-                [
-                    'name' => 'required',
-                    'email' => 'required|email|unique:users,email',
-                    'password' => 'required'
-                ]);
-
-            if($validateUser->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }
-
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
