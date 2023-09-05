@@ -23,8 +23,17 @@ class PageRepository implements PageInterface
     {
         // TODO: Implement getAllPage() method.
         try {
-            $pages = Page::with('image', 'texts.audio', 'texts.position', 'texts.position', 'interactions.positions', 'interactions.image', 'interactions.text')->get();
+            $pages = Page::with('image', 'texts.audio', 'texts.position', 'texts.position', 'interactions.positions', 'interactions.image', 'interactions.text.audio')->get();
             Log::info('Get all page');
+            return $pages;
+        } catch (QueryException $exception) {
+            throw ErrorException::queryFailed($exception->getMessage());
+        }
+    }
+    public function getPageByStory($storyId){
+        try {
+            $pages = Page::with('image', 'texts.audio', 'texts.position', 'texts.position', 'interactions.positions', 'interactions.image', 'interactions.text.audio')->where('story_id', $storyId)->get();
+            Log::info('Get all page by story_id');
             return $pages;
         } catch (QueryException $exception) {
             throw ErrorException::queryFailed($exception->getMessage());
@@ -88,7 +97,7 @@ class PageRepository implements PageInterface
     {
         // TODO: Implement getPageById() method.
         try {
-            $story = Page::with('image', 'texts.audio', 'texts.position', 'texts.position', 'interactions.positions', 'interactions.image', 'interactions.text')->find($id);
+            $story = Page::with('image', 'texts.audio', 'texts.position', 'texts.position', 'interactions.positions', 'interactions.image', 'interactions.text.audio')->find($id);
             if (!$story)
                 throw ErrorException::notFound('Page not found with id ' . $id);
             Log::info('Get page by id: ' . $id);

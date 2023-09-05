@@ -30,6 +30,11 @@ class PageController extends Controller
 
     }
 
+    public function findByStory($id){
+        $pages = $this->pageRepository->getPageByStory($id);
+        return $this->responseJson('find pages by story',$pages);
+    }
+
     public function create(PageStoreRequest $request)
     {
         $createdPage = $this->pageRepository->createPage(

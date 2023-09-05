@@ -11,4 +11,5 @@ interface PageInterface
     public function deletePage ($id);
     public function createPage($imageId,$pageNumber,$storyId);
     public function updatePage($id,$imageId,$pageNumber,$storyId);
+    public function getPageByStory($storyId);
 }

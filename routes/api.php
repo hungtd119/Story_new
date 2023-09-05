@@ -48,6 +48,7 @@ Route::prefix('story')->group(function () {
 Route::prefix('page')->group(function () {
     Route::get('/', [PageController::class, 'index']);
     Route::get('/find/{id}', [PageController::class, 'findById']);
+    Route::get('/findByStoryId/{id}',[PageController::class,'findByStory']);
     Route::middleware('auth:sanctum')->group(function (){
         Route::delete('/{id}', [PageController::class, 'delete']);
         Route::middleware([
