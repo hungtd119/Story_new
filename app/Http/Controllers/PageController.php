@@ -2,68 +2,115 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ErrorException;
 use App\Http\Requests\PageStoreRequest;
 use App\Http\Resources\DataCollection;
 use App\Models\Page;
+use App\Repositories\Helper\HelperInterface;
 use App\Repositories\Page\PageInterface;
+use App\Repositories\Page\PageRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PageController extends Controller
 {
     public $pageRepository;
+    public $pageBaseService;
+    public $helperRepository;
+    public $page;
 
-    public function __construct(PageInterface $pageRepository)
+    public function __construct(PageInterface $pageRepository, PageRepository $pageBaseService, HelperInterface $helperRepository)
     {
         $this->pageRepository = $pageRepository;
+        $this->pageBaseService = $pageBaseService;
+        $this->helperRepository = $helperRepository;
+        $this->page = new Page();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $page = $this->pageRepository->getAllPage();
-        return response(new DataCollection($page), 200);
+        $limit = $request->query("limit") ? $request->query("limit") : 5;
+        $page = $request->query("page") ? $request->query("page") : 1;
+
+        $offSet = ($page - 1) * $limit;
+        try {
+            $pages = $this->pageBaseService->getAll($limit, $offSet);
+            return $this->responseJson("get all pages", $pages);
+        } catch (ErrorException $e) {
+            Log::error('get all page failed');
+            throw $e;
+        }
     }
 
     public function findById($id)
     {
-        $page = $this->pageRepository->getPageById($id);
-        return $this->responseJson( 'find page by id',$page);
-
-    }
-
-    public function findByStory($id){
-        $pages = $this->pageRepository->getPageByStory($id);
-        return $this->responseJson('find pages by story',$pages);
-    }
-
-    public function create(PageStoreRequest $request)
-    {
-        $createdPage = $this->pageRepository->createPage(
-            $request->input('image_id'),
-            $request->input('page_number'),
-            $request->input('story_id'),
-        );
-        return $this->responseJson( 'Created a new Page', $createdPage);
+        // validate
+        if (!$id)
+            throw ErrorException::notFound("Id page not found.");
+        try {
+            $page = $this->pageBaseService->findById($id);
+            return $this->responseJson('get page by id', $page);
+        } catch (ErrorException $e) {
+            Log::error('Get page by id failed', $id);
+            throw $e;
+        }
     }
 
     public function delete($id)
     {
-        $deletedPage = $this->pageRepository->deletePage($id);
-//        return response([
-//            'success' => true,
-//            'message' => 'deleted page',
-//        ]);
-        return $this->responseJson('deleted page');
-
+        if (!$id) throw ErrorException::notFound("Id page not found.");
+        try {
+            $this->pageBaseService->delete($id);
+            return $this->responseJson("Deleted page with id " . $id, true);
+        } catch (ErrorException $e) {
+            Log::error("Delete page failed with id " . $id);
+            throw $e;
+        }
     }
 
-    public function update(PageStoreRequest $request)
+    public function create(Request $request)
     {
-        $updatedPage = $this->pageRepository->updatePage(
-            $request->query('id'),
-            $request->input('image_id'),
-            $request->input('page_number'),
-            $request->input('story_id'),
-        );
-        return $this->responseJson( 'updated page', $updatedPage);
+        // Validate Input
+        $request->validate([
+            $this->page->_IMAGE_ID => 'required',
+            $this->page->_PAGE_NUMBER => 'required',
+            $this->page->_STORY_ID => 'required',
+        ]);
+        try {
+            // Get data inputs
+            $dataInputs = $this->pageBaseService->getDataInput($request);
+            // Execute logic
+            $page = $this->pageBaseService->store($dataInputs);
+            return $this->responseJson('store page success', $page);
+        } catch (ErrorException $e) {
+            Log::error('Page store failed.', [
+                'dataInput' => $dataInputs,
+            ]);
+            throw ErrorException::badRequest($e);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            $this->page->_IMAGE_ID => 'required',
+            $this->page->_PAGE_NUMBER => 'required',
+            $this->page->_STORY_ID => 'required',
+        ]);
+        try {
+            $id = $request->query("id");
+            $dataInputs = $this->pageBaseService->getDataInput($request);
+            $page = $this->pageBaseService->store($dataInputs, $id);
+            return $this->responseJson("Updated page success", $page);
+        } catch (ErrorException $e) {
+            Log::error("Update Page failed id" . $id);
+            throw $e;
+        }
+    }
+    public function findByStory($id)
+    {
+        if (!$id) throw ErrorException::notFound("Id story not found");
+        $pages = $this->pageRepository->getPageByStory($id);
+        return $this->responseJson('find pages by story', $pages);
     }
 }

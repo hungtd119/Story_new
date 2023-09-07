@@ -13,12 +13,14 @@ class Position extends Model
     protected $table = 'positions';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id','position_x','position_y','width','height','interaction_id','text_id'];
-    protected $hidden = ['interaction_id','text_id'];
-    public function interactions () : BelongsTo{
-        return $this->belongsTo(Interaction::class,'interaction_id');
+    protected $fillable = ['id', 'position_x', 'position_y', 'width', 'height', 'isDragging', 'isResizing', 'resizeDirect', 'dragStartX', 'dragStartY', 'interaction_id', 'text_id'];
+    protected $hidden = ['interaction_id', 'text_id'];
+    public function interactions(): BelongsTo
+    {
+        return $this->belongsTo(Interaction::class, 'interaction_id');
     }
-    public function text () : BelongsTo{
+    public function text(): BelongsTo
+    {
         return $this->belongsTo(Text::class);
     }
 }

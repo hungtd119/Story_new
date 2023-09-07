@@ -11,23 +11,31 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Page extends Model
 {
+    public $_NAME = 'Page';
+    public $_ID = 'id';
+    public $_IMAGE_ID = 'image_id';
+    public $_PAGE_NUMBER = 'page_number';
+    public $_STORY_ID = 'story_id';
     use HasFactory;
-    protected $table = 'pages';
+    public $table = 'pages';
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = true;
-    protected $fillable = ['id','image_id','page_number','story_id'];
-    protected $hidden = ['image_id','story_id'];
-    public function stories ():BelongsTo{
-        return $this -> belongsTo(Story::class,'story_id');
+    protected $fillable = ['id', 'image_id', 'page_number', 'story_id'];
+    public function stories(): BelongsTo
+    {
+        return $this->belongsTo(Story::class, 'story_id');
     }
-    public function interactions ():HasMany{
-        return $this -> hasMany(Interaction::class);
+    public function interactions(): HasMany
+    {
+        return $this->hasMany(Interaction::class);
     }
-    public function image ():BelongsTo{
-        return $this -> belongsTo(Image::class);
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Image::class);
     }
-    public function texts ():BelongsToMany{
-        return $this->belongsToMany(Text::class,'text_config');
+    public function texts(): BelongsToMany
+    {
+        return $this->belongsToMany(Text::class, 'text_config');
     }
 }

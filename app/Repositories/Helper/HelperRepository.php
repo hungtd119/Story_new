@@ -2,9 +2,10 @@
 
 namespace App\Repositories\Helper;
 
+use Illuminate\Http\Request;
+
 class HelperRepository implements HelperInterface
 {
-
     public function generateUniqueCode($model)
     {
         $model = app("App\\Models\\$model");

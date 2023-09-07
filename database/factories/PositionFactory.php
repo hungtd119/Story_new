@@ -19,13 +19,18 @@ class PositionFactory extends Factory
     public function definition()
     {
         return [
-            'id'=>$this->faker->numerify('########'),
-            'position_x'=>$this->faker->numerify("###"),
-            'position_y'=>$this->faker->numerify("###"),
-            'width'=>$this->faker->numerify("###"),
-            'height'=>$this->faker->numerify("###"),
-            'text_id'=>Text::all()->random()->id,
-            'interaction_id'=>Interaction::all()->random()->id,
+            'id' => $this->faker->numerify('########'),
+            'position_x' => $this->faker->numerify("###"),
+            'position_y' => $this->faker->numerify("###"),
+            'width' => $this->faker->numerify("###"),
+            'height' => $this->faker->numerify("###"),
+            'isDragging' => $this->faker->boolean(),
+            'isResizing' => $this->faker->boolean(),
+            'resizeDirect' => $this->faker->text(),
+            'dragStartX' => $this->faker->numerify("###"),
+            'dragStartY' => $this->faker->numerify("###"),
+            'text_id' => Text::all()->random()->id,
+            'interaction_id' => Interaction::all()->random()->id,
         ];
     }
 }

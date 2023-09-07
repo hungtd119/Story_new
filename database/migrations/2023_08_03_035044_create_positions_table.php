@@ -19,11 +19,14 @@ return new class extends Migration
             $table->integer('position_y');
             $table->integer('width');
             $table->integer('height');
-
+            $table->boolean('isDragging');
+            $table->boolean('isResizing');
+            $table->string('resizeDirect');
+            $table->integer('dragStartX');
+            $table->integer('dragStartY');
             $table->unsignedBigInteger('interaction_id');
             $table->unsignedBigInteger('text_id');
             $table->timestamps();
-
         });
     }
 

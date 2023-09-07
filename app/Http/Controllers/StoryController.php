@@ -4,61 +4,112 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStoryRequest;
 use App\Http\Resources\DataCollection;
+use App\Models\Story;
+use App\Repositories\Helper\HelperInterface;
 use App\Repositories\Story\StoryInterface;
+use App\Repositories\Story\StoryRepository;
+use App\Exceptions\ErrorException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StoryController extends Controller
 {
     public $storyRepository;
+    public $storyBaseService;
+    public $helperRepository;
+    public $story;
 
-    public function __construct(StoryInterface $storyRepository)
+    public function __construct(StoryInterface $storyRepository, StoryRepository $storyBaseService, HelperInterface $helperRepository)
     {
         $this->storyRepository = $storyRepository;
+        $this->storyBaseService = $storyBaseService;
+        $this->helperRepository = $helperRepository;
+        $this->story = new Story();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $stories = $this->storyRepository->getAllStories();
-        return \response(new DataCollection($stories), 200);
+        $limit = $request->query("limit") ? $request->query("limit") : 5;
+        $page = $request->query("page") ? $request->query("page") : 1;
+
+        $offSet = ($page - 1) * $limit;
+        try {
+            $stories = $this->storyBaseService->getAll($limit, $offSet);
+            return $this->responseJson("get all stories", $stories);
+        } catch (ErrorException $e) {
+            Log::error('get all stories failed');
+            throw $e;
+        }
     }
 
     public function findById($id)
     {
-        $story = $this->storyRepository->getStoryById($id);
-        return $this->responseJson('find story by id', $story);
+        // validate
+        if (!$id)
+            throw ErrorException::notFound("Id story not found.");
+        try {
+            $story = $this->storyBaseService->findById($id);
+            return $this->responseJson('get story by id', $story);
+        } catch (ErrorException $e) {
+            Log::error('Get story by id failed', $id);
+            throw $e;
+        }
     }
 
     public function delete($id)
     {
-
-        $deletedStory = $this->storyRepository->deleteStory($id);
-        return $this->responseJson('deleted story');
-
+        if (!$id) throw ErrorException::notFound("Id story not found.");
+        try {
+            $this->storyBaseService->delete($id);
+            return $this->responseJson("Deleted story with id " . $id, true);
+        } catch (ErrorException $e) {
+            Log::error("Delete story failed with id " . $id);
+            throw $e;
+        }
     }
 
-    public function create(StoreStoryRequest $request)
+    public function create(Request $request)
     {
-        $createdStory = $this->storyRepository->createStory(
-            $request->input('title'),
-            $request->input('image_id'),
-            $request->input('author'),
-            $request->input('illustrator'),
-            $request->input('level'),
-            $request->input('coin')
-        );
-        return $this->responseJson('Created a new Story',$createdStory);
+        // Validate Input
+        $request->validate([
+            $this->story->_TITLE => 'required|string',
+            $this->story->_AUTHOR => 'required|string',
+            $this->story->_ILLUSTRATOR => 'required|string',
+            $this->story->_LEVEL => 'required',
+            $this->story->_COIN => 'required',
+        ]);
+        try {
+            // Get data inputs
+            $dataInputs = $this->storyBaseService->getDataInput($request);
+            // Execute logic
+            $story = $this->storyBaseService->store($dataInputs);
+            return $this->responseJson('store story success', $story);
+        } catch (ErrorException $e) {
+            Log::error('Story store failed.', [
+                'dataInput' => $dataInputs,
+            ]);
+            throw ErrorException::badRequest($e);
+        }
     }
 
-    public function update(StoreStoryRequest $request)
+    public function update(Request $request)
     {
-        $updatedStory = $this->storyRepository->updateStory(
-            $request->query('id'),
-            $request->input('title'),
-            $request->input('image_id'),
-            $request->input('author'),
-            $request->input('illustrator'),
-            $request->input('level'),
-            $request->input('coin')
-        );
-        return $this->responseJson('updated story',$updatedStory);
+        $request->validate([
+            $this->story->_TITLE => 'required|string',
+            $this->story->_AUTHOR => 'required|string',
+            $this->story->_ILLUSTRATOR => 'required|string',
+            $this->story->_LEVEL => 'required',
+            $this->story->_COIN => 'required',
+        ]);
+        try {
+            // get data inputs
+            $id = $request->query("id");
+            $dataInputs = $this->storyBaseService->getDataInput($request);
+            $story = $this->storyBaseService->store($dataInputs, $id);
+            return $this->responseJson("Updated story success", $story);
+        } catch (ErrorException $e) {
+            Log::error("Update Story failed id" . $id);
+            throw $e;
+        }
     }
 }

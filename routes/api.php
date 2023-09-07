@@ -29,15 +29,15 @@ Route::prefix('auth')->group(function () {
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return "Ok";
 //});
-Route::group(['middleware' => ['auth:sanctum']],function () {
-    Route::get('/user',function (){
-       return 'ok';
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user', function () {
+        return 'ok';
     });
 });
 Route::prefix('story')->group(function () {
     Route::get('/', [StoryController::class, 'index']);
     Route::get('/find/{id}', [StoryController::class, 'findById']);
-    Route::middleware('auth:sanctum')->group(function (){
+    Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [StoryController::class, 'delete']);
         Route::middleware([CheckParentRecordImage::class])->group(function () {
             Route::post('/', [StoryController::class, 'create']);
@@ -48,8 +48,8 @@ Route::prefix('story')->group(function () {
 Route::prefix('page')->group(function () {
     Route::get('/', [PageController::class, 'index']);
     Route::get('/find/{id}', [PageController::class, 'findById']);
-    Route::get('/findByStoryId/{id}',[PageController::class,'findByStory']);
-    Route::middleware('auth:sanctum')->group(function (){
+    Route::get('/findByStoryId/{id}', [PageController::class, 'findByStory']);
+    Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [PageController::class, 'delete']);
         Route::middleware([
             CheckParentRecordStory::class,
@@ -63,7 +63,7 @@ Route::prefix('page')->group(function () {
 Route::prefix('text')->group(function () {
     Route::get('/', [TextController::class, 'index']);
     Route::get('/find/{id}', [TextController::class, 'findById']);
-    Route::middleware('auth:sanctum')->group(function (){
+    Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [TextController::class, 'delete']);
         Route::post('/', [TextController::class, 'create']);
         Route::put('/', [TextController::class, 'update']);
@@ -72,9 +72,9 @@ Route::prefix('text')->group(function () {
 Route::prefix('audio')->group(function () {
     Route::get('/', [AudioController::class, 'index']);
     Route::get('/find/{id}', [AudioController::class, 'findById']);
-    Route::middleware('auth:sanctum')->group(function (){
+    Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [AudioController::class, 'delete']);
-        Route::middleware([CheckParentRecordText::class])->group(function (){
+        Route::middleware([CheckParentRecordText::class])->group(function () {
             Route::post('/', [AudioController::class, 'create']);
             Route::put('/', [AudioController::class, 'update']);
         });

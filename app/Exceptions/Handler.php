@@ -80,15 +80,15 @@ class Handler extends ExceptionHandler
             case $e instanceof ErrorException:
                 $message    = $e->getMessage();
                 $statusCode = $e->getCode();
-                $errors = $e->getData();
+                $errors = $e;
                 break;
             default:
                 break;
         }
 
-        if ($request->is('*api*')) {
-            return $this->makeErrorResponse($statusCode, $message, $errors);
-        }
+        // if ($request->is('*api*')) {
+        //     return $this->makeErrorResponse($statusCode, $message, $errors);
+        // }
 
         return response($message, Response::HTTP_BAD_REQUEST);
     }
