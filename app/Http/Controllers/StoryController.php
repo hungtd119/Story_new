@@ -31,10 +31,11 @@ class StoryController extends Controller
     {
         $limit = $request->query("limit") ? $request->query("limit") : 5;
         $page = $request->query("page") ? $request->query("page") : 1;
+        $keyword = $request->query("keyword") ? $request->query("keyword") : "";
 
         $offSet = ($page - 1) * $limit;
         try {
-            $stories = $this->storyBaseService->getAll($limit, $offSet);
+            $stories = $this->storyBaseService->getAll($limit, $offSet, $keyword);
             return $this->responseJson("get all stories", $stories);
         } catch (ErrorException $e) {
             Log::error('get all stories failed');

@@ -31,10 +31,10 @@ class PageController extends Controller
     {
         $limit = $request->query("limit") ? $request->query("limit") : 5;
         $page = $request->query("page") ? $request->query("page") : 1;
-
+        $keyword = $request->query("keyword") ? $request->query("keyword") : "";
         $offSet = ($page - 1) * $limit;
         try {
-            $pages = $this->pageBaseService->getAll($limit, $offSet);
+            $pages = $this->pageBaseService->getAll($limit, $offSet, $keyword);
             return $this->responseJson("get all pages", $pages);
         } catch (ErrorException $e) {
             Log::error('get all page failed');

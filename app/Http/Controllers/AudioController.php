@@ -30,10 +30,10 @@ class AudioController extends Controller
     {
         $limit = $request->query("limit") ? $request->query("limit") : 5;
         $page = $request->query("page") ? $request->query("page") : 1;
-
+        $keyword = $request->query("keyword") ? $request->query("keyword") : "";
         $offSet = ($page - 1) * $limit;
         try {
-            $audios = $this->audioBaseService->getAll($limit, $offSet);
+            $audios = $this->audioBaseService->getAll($limit, $offSet, $keyword);
             return $this->responseJson("get all audios", $audios);
         } catch (ErrorException $e) {
             Log::error('get all audios failed');

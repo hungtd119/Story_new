@@ -30,9 +30,15 @@ abstract class BaseService
         }
         return $data;
     }
-    public function getAll($limit, $offset)
+    public function getAll($limit, $offset, $keyword)
     {
-        return $this->model->offset($offset)->limit($limit)->get();
+        // return $this->model->offset($offset)->limit($limit)->get();
+        $query = $this->model->query();
+        $columns = $this->model->getConnection()->getSchemaBuilder()->getColumnListing($this->model->getTable());
+        foreach ($columns as $column) {
+            $query->orWhere($column, 'like', '%' . $keyword . '%');
+        }
+        return $query->offset($offset)->limit($limit)->get();
     }
     public function findById(int $id)
     {
