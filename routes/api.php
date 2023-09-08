@@ -44,6 +44,8 @@ Route::prefix('story')->group(function () {
             Route::put('/', [StoryController::class, 'update']);
         });
     });
+
+    Route::get('/cards', [StoryController::class, 'getStoriesCard']);
 });
 Route::prefix('page')->group(function () {
     Route::get('/', [PageController::class, 'index']);

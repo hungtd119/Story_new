@@ -113,4 +113,21 @@ class StoryController extends Controller
             throw $e;
         }
     }
+
+    public function getStoriesCard(Request $request)
+    {
+        $limit = $request->query("limit") ? $request->query("limit") : 5;
+        $page = $request->query("page") ? $request->query("page") : 1;
+        $keyword = $request->query("keyword") ? $request->query("keyword") : "";
+
+        $offSet = ($page - 1) * $limit;
+
+        try {
+            $stories = $this->storyRepository->getStoriesCard($limit, $offSet, $keyword);
+            return $this->responseJson("get all stories card", $stories);
+        } catch (ErrorException $e) {
+            Log::error('get all stories card failed');
+            throw $e;
+        }
+    }
 }

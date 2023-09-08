@@ -10,6 +10,7 @@ use App\Models\Story;
 use App\Repositories\BaseService;
 use App\Repositories\Helper\HelperInterface;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,5 +21,10 @@ class StoryRepository extends BaseService implements StoryInterface
     {
         parent::__construct($story, $helperRepository);
         $this->helperRepository = $helperRepository;
+    }
+    public function getStoriesCard($limit, $offSet, $keyword)
+    {
+        $stories = Story::with('image', 'pages.texts')->limit($limit)->offSet($offSet)->get();
+        return $stories;
     }
 }
