@@ -130,4 +130,17 @@ class StoryController extends Controller
             throw $e;
         }
     }
+    public function getStoryDetailById($id)
+    {
+        if (!$id) {
+            throw ErrorException::notFound("id story not found.");
+        }
+        try {
+            $story = $this->storyRepository->getStoryDetailById($id);
+            return $this->responseJson("Get story detail by id", $story);
+        } catch (ErrorException $e) {
+            Log::error('get detail stories failed');
+            throw $e;
+        }
+    }
 }

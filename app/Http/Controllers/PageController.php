@@ -107,10 +107,26 @@ class PageController extends Controller
             throw $e;
         }
     }
-    public function findByStory($id)
+    public function findByStory($id, Request $request)
     {
+        $limit = $request->query("limit") ? $request->query("limit") : 5;
+        $page = $request->query("page") ? $request->query("page") : 1;
+        $keyword = $request->query("keyword") ? $request->query("keyword") : "";
+
+        $offSet = ($page - 1) * $limit;
         if (!$id) throw ErrorException::notFound("Id story not found");
-        $pages = $this->pageRepository->getPageByStory($id);
+        $pages = $this->pageRepository->getPageByStory($id, $limit, $offSet, $keyword);
         return $this->responseJson('find pages by story', $pages);
+    }
+    public function getByStoryId(Request $request)
+    {
+        $storyId = $request->query("storyId");
+        $pageId = $request->query("pageId");
+
+        if (!$storyId || !$pageId) {
+            throw ErrorException::notFound("Not found story id or page id");
+        }
+        $page = $this->pageRepository->getPageByStoryId($storyId, $pageId);
+        return $this->responseJson("get page by page id and story id", $page);
     }
 }

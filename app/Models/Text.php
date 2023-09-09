@@ -22,6 +22,7 @@ class Text extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = true;
+    protected $hidden = ['pivot'];
     protected $fillable = ['id', 'text', 'icon', 'wordSync'];
     // protected $hidden = ['audio_id', 'pivot'];
     public function audio(): HasOne

@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::prefix('story')->group(function () {
     Route::get('/', [StoryController::class, 'index']);
     Route::get('/find/{id}', [StoryController::class, 'findById']);
+    Route::get('/detail/{id}', [StoryController::class, 'getStoryDetailById']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [StoryController::class, 'delete']);
         Route::middleware([CheckParentRecordImage::class])->group(function () {
@@ -51,6 +52,7 @@ Route::prefix('page')->group(function () {
     Route::get('/', [PageController::class, 'index']);
     Route::get('/find/{id}', [PageController::class, 'findById']);
     Route::get('/findByStoryId/{id}', [PageController::class, 'findByStory']);
+    Route::get('/getByStoryId', [PageController::class, 'getByStoryId']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [PageController::class, 'delete']);
         Route::middleware([

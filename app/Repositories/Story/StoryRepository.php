@@ -6,6 +6,7 @@ use App\Exceptions\ErrorException;
 use App\Exceptions\StoryNotFoundException;
 use App\Http\Requests\StoreStoryRequest;
 use App\Http\Resources\DataCollection;
+use App\Models\Page;
 use App\Models\Story;
 use App\Repositories\BaseService;
 use App\Repositories\Helper\HelperInterface;
@@ -25,6 +26,12 @@ class StoryRepository extends BaseService implements StoryInterface
     public function getStoriesCard($limit, $offSet, $keyword)
     {
         $stories = Story::with('image', 'pages.texts')->limit($limit)->offSet($offSet)->get();
-        return $stories;
+        $count = Story::count();
+        return ['stories' => $stories, "count" => $count];
+    }
+    public function getStoryDetailById($id)
+    {
+        $story = DB::table('stories')->select()->find($id);
+        return ['story' => $story];
     }
 }

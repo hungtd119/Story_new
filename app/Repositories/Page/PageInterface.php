@@ -6,5 +6,6 @@ use App\Http\Requests\PageStoreRequest;
 
 interface PageInterface
 {
-    public function getPageByStory($storyId);
+    public function getPageByStory($storyId, $limit, $offSet, $keyword);
+    public function getPageByStoryId($storyId, $pageId);
 }
