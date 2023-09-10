@@ -33,6 +33,7 @@ class PageRepository extends BaseService implements PageInterface
                 ->groupBy('pages.id')
                 ->limit($limit)
                 ->offSet($offSet)
+                ->orderBy("pages.page_number", "asc")
                 ->get();
             $count = Page::where('story_id', $storyId)->count();
             Log::info('Get all page by story_id');
@@ -49,9 +50,27 @@ class PageRepository extends BaseService implements PageInterface
     {
         try {
             $page = Page::query()->with("interactions.positions.text", "image", "texts")->where([
-                ['story_id', "=", $storyId],
-                ['id', '=', $pageId]
-            ])->get();
+                ['story_id', "=", $storyId]
+            ])->find($pageId);
+            $countPage = Page::query()->where("story_id", $storyId)->count();
+            return ['page' => $page, "count" => $countPage];
+        } catch (QueryException $exception) {
+            throw ErrorException::queryFailed($exception->getMessage());
+        }
+    }
+    public function getPagesIdByStoryId($storyId)
+    {
+        try {
+            $pagesId = Page::query()->where("story_id", "=", $storyId)->select("id", 'page_number')->orderBy('page_number', 'asc')->get();
+            return $pagesId;
+        } catch (QueryException $exception) {
+            throw ErrorException::queryFailed($exception->getMessage());
+        }
+    }
+    public function getPageToConfig($id)
+    {
+        try {
+            $page = Page::query()->with("interactions.positions.text", "image", "texts")->find($id);
             return $page;
         } catch (QueryException $exception) {
             throw ErrorException::queryFailed($exception->getMessage());

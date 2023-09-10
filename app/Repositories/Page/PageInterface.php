@@ -8,4 +8,6 @@ interface PageInterface
 {
     public function getPageByStory($storyId, $limit, $offSet, $keyword);
     public function getPageByStoryId($storyId, $pageId);
+    public function getPagesIdByStoryId($storyId);
+    public function getPageToConfig($id);
 }

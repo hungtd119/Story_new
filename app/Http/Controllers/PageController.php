@@ -129,4 +129,20 @@ class PageController extends Controller
         $page = $this->pageRepository->getPageByStoryId($storyId, $pageId);
         return $this->responseJson("get page by page id and story id", $page);
     }
+    public function getPagesId($storyId)
+    {
+        if (!$storyId) {
+            throw ErrorException::notFound("Not found story id");
+        }
+        $pagesId = $this->pageRepository->getPagesIdByStoryId($storyId);
+        return $this->responseJson("Get pages id by story id", $pagesId);
+    }
+    public function getPageToConfig($id)
+    {
+        if (!$id) {
+            throw ErrorException::notFound("Not found page id");
+        }
+        $page = $this->pageRepository->getPageToConfig($id);
+        return $this->responseJson("Get page to config", $page);
+    }
 }

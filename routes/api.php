@@ -53,6 +53,8 @@ Route::prefix('page')->group(function () {
     Route::get('/find/{id}', [PageController::class, 'findById']);
     Route::get('/findByStoryId/{id}', [PageController::class, 'findByStory']);
     Route::get('/getByStoryId', [PageController::class, 'getByStoryId']);
+    Route::get('/id/{storyId}', [PageController::class, 'getPagesId']);
+    Route::get('/config/{id}', [PageController::class, 'getPageToConfig']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [PageController::class, 'delete']);
         Route::middleware([
