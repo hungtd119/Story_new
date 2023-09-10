@@ -9,6 +9,7 @@ use App\Http\Middleware\CheckParentRecordStory;
 use App\Http\Middleware\CheckParentRecordImage;
 use App\Http\Controllers\TextController;
 use App\Http\Controllers\AudioController;
+use App\Http\Controllers\ImageController;
 use App\Http\Middleware\CheckParentRecordText;
 
 /*
@@ -85,4 +86,7 @@ Route::prefix('audio')->group(function () {
             Route::put('/', [AudioController::class, 'update']);
         });
     });
+});
+Route::prefix('image')->group(function () {
+    Route::get('/', [ImageController::class, 'index']);
 });

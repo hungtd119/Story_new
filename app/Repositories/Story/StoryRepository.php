@@ -25,7 +25,7 @@ class StoryRepository extends BaseService implements StoryInterface
     }
     public function getStoriesCard($limit, $offSet, $keyword)
     {
-        $stories = Story::with('image', 'pages.texts')->limit($limit)->offSet($offSet)->get();
+        $stories = Story::with('image', 'pages.texts')->limit($limit)->offSet($offSet)->orderBy("created_at", "desc")->get();
         $count = Story::count();
         return ['stories' => $stories, "count" => $count];
     }

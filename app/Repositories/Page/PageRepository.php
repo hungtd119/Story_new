@@ -70,7 +70,7 @@ class PageRepository extends BaseService implements PageInterface
     public function getPageToConfig($id)
     {
         try {
-            $page = Page::query()->with("interactions.positions.text", "image", "texts")->find($id);
+            $page = Page::query()->with("interactions.positions", "image", "interactions.text")->find($id);
             return $page;
         } catch (QueryException $exception) {
             throw ErrorException::queryFailed($exception->getMessage());
