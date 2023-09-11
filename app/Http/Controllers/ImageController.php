@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ErrorException;
 use App\Models\Image;
 use App\Repositories\Image\ImageRepository;
-use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -30,6 +30,23 @@ class ImageController extends Controller
         } catch (ErrorException $e) {
             Log::error('get all images failed');
             throw $e;
+        }
+    }
+    public function create(Request $request)
+    {
+        $request->validate([
+            $this->image->_PATH => 'required',
+            $this->image->_FILENAME => 'required',
+        ]);
+        try {
+            $dataInputs = $this->imageBaseService->getDataInput($request);
+            $image = $this->imageBaseService->store($dataInputs);
+            return $this->responseJson("Create image done", $image);
+        } catch (ErrorException $e) {
+            Log::error('Image store failed.', [
+                'dataInput' => $dataInputs,
+            ]);
+            throw ErrorException::badRequest($e);
         }
     }
 }

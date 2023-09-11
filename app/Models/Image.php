@@ -9,19 +9,28 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Image extends Model
 {
+
+    public $_NAME = 'Image';
+    public $_ID = 'id';
+    public $_PATH = 'path';
+    public $_FILENAME = 'filename';
+
     use HasFactory;
-    protected $table = 'images';
+    public $table = 'images';
     protected $primaryKey = 'id';
+    public $incrementing = false;
     public $timestamps = true;
-    protected $fillable = ['id','path','filename','wordSync'];
-    public function page () :HasOne{
+    protected $fillable = ['id', 'path', 'filename'];
+    public function page(): HasOne
+    {
         return $this->hasOne(Page::class);
     }
-    public function interaction () :HasOne{
+    public function interaction(): HasOne
+    {
         return $this->hasOne(Interaction::class);
     }
-    public function stories () :HasOne{
+    public function stories(): HasOne
+    {
         return $this->hasOne(Story::class);
     }
-
 }

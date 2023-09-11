@@ -116,6 +116,7 @@ class PageController extends Controller
         $offSet = ($page - 1) * $limit;
         if (!$id) throw ErrorException::notFound("Id story not found");
         $pages = $this->pageRepository->getPageByStory($id, $limit, $offSet, $keyword);
+
         return $this->responseJson('find pages by story', $pages);
     }
     public function getByStoryId(Request $request)

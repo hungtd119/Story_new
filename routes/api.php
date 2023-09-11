@@ -39,12 +39,12 @@ Route::prefix('story')->group(function () {
     Route::get('/', [StoryController::class, 'index']);
     Route::get('/find/{id}', [StoryController::class, 'findById']);
     Route::get('/detail/{id}', [StoryController::class, 'getStoryDetailById']);
+    Route::delete('/{id}', [StoryController::class, 'delete']);
+    Route::middleware([CheckParentRecordImage::class])->group(function () {
+        Route::post('/', [StoryController::class, 'create']);
+        Route::put('/', [StoryController::class, 'update']);
+    });
     Route::middleware('auth:sanctum')->group(function () {
-        Route::delete('/{id}', [StoryController::class, 'delete']);
-        Route::middleware([CheckParentRecordImage::class])->group(function () {
-            Route::post('/', [StoryController::class, 'create']);
-            Route::put('/', [StoryController::class, 'update']);
-        });
     });
 
     Route::get('/cards', [StoryController::class, 'getStoriesCard']);
@@ -58,13 +58,13 @@ Route::prefix('page')->group(function () {
     Route::get('/config/{id}', [PageController::class, 'getPageToConfig']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [PageController::class, 'delete']);
-        Route::middleware([
-            CheckParentRecordStory::class,
-            CheckParentRecordImage::class
-        ])->group(function () {
-            Route::post('/', [PageController::class, 'create']);
-            Route::put('/', [PageController::class, 'update']);
-        });
+    });
+    Route::middleware([
+        CheckParentRecordStory::class,
+        CheckParentRecordImage::class
+    ])->group(function () {
+        Route::post('/', [PageController::class, 'create']);
+        Route::put('/', [PageController::class, 'update']);
     });
 });
 Route::prefix('text')->group(function () {
@@ -89,4 +89,5 @@ Route::prefix('audio')->group(function () {
 });
 Route::prefix('image')->group(function () {
     Route::get('/', [ImageController::class, 'index']);
+    Route::post('/', [ImageController::class, 'create']);
 });
