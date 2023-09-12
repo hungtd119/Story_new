@@ -146,4 +146,12 @@ class PageController extends Controller
         $page = $this->pageRepository->getPageToConfig($id);
         return $this->responseJson("Get page to config", $page);
     }
+    public function getPageToPlay($id)
+    {
+        if (!$id) {
+            throw ErrorException::notFound("Not found page id");
+        }
+        $page = $this->pageRepository->getPageToPlay($id);
+        return $this->responseJson("Get page to play", $page);
+    }
 }

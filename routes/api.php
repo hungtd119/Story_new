@@ -56,6 +56,7 @@ Route::prefix('page')->group(function () {
     Route::get('/getByStoryId', [PageController::class, 'getByStoryId']);
     Route::get('/id/{storyId}', [PageController::class, 'getPagesId']);
     Route::get('/config/{id}', [PageController::class, 'getPageToConfig']);
+    Route::get('/play/{id}', [PageController::class, 'getPageToPlay']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [PageController::class, 'delete']);
     });

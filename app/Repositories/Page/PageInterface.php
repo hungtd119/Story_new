@@ -10,4 +10,5 @@ interface PageInterface
     public function getPageByStoryId($storyId, $pageId);
     public function getPagesIdByStoryId($storyId);
     public function getPageToConfig($id);
+    public function getPageToPlay($id);
 }
