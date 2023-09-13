@@ -6,6 +6,8 @@ use App\Repositories\Audio\AudioInterface;
 use App\Repositories\Audio\AudioRepository;
 use App\Repositories\Helper\HelperInterface;
 use App\Repositories\Helper\HelperRepository;
+use App\Repositories\Interaction\InteractionInterface;
+use App\Repositories\Interaction\InteractionRepository;
 use App\Repositories\Page\PageInterface;
 use App\Repositories\Page\PageRepository;
 use App\Repositories\Story\StoryInterface;
@@ -23,11 +25,12 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(StoryInterface::class,StoryRepository::class);
-        $this->app->bind(PageInterface::class,PageRepository::class);
-        $this->app->bind(HelperInterface::class,HelperRepository::class);
-        $this->app->bind(TextInterface::class,TextRepository::class);
-        $this->app->bind(AudioInterface::class,AudioRepository::class);
+        $this->app->bind(StoryInterface::class, StoryRepository::class);
+        $this->app->bind(PageInterface::class, PageRepository::class);
+        $this->app->bind(HelperInterface::class, HelperRepository::class);
+        $this->app->bind(TextInterface::class, TextRepository::class);
+        $this->app->bind(AudioInterface::class, AudioRepository::class);
+        $this->app->bind(InteractionInterface::class, InteractionRepository::class);
     }
 
     /**

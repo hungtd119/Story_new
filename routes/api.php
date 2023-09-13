@@ -10,6 +10,7 @@ use App\Http\Middleware\CheckParentRecordImage;
 use App\Http\Controllers\TextController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\InteractionController;
 use App\Http\Middleware\CheckParentRecordText;
 
 /*
@@ -71,10 +72,10 @@ Route::prefix('page')->group(function () {
 Route::prefix('text')->group(function () {
     Route::get('/', [TextController::class, 'index']);
     Route::get('/find/{id}', [TextController::class, 'findById']);
+    Route::delete('/{id}', [TextController::class, 'delete']);
+    Route::post('/', [TextController::class, 'create']);
+    Route::put('/', [TextController::class, 'update']);
     Route::middleware('auth:sanctum')->group(function () {
-        Route::delete('/{id}', [TextController::class, 'delete']);
-        Route::post('/', [TextController::class, 'create']);
-        Route::put('/', [TextController::class, 'update']);
     });
 });
 Route::prefix('audio')->group(function () {
@@ -91,4 +92,9 @@ Route::prefix('audio')->group(function () {
 Route::prefix('image')->group(function () {
     Route::get('/', [ImageController::class, 'index']);
     Route::post('/', [ImageController::class, 'create']);
+});
+Route::prefix('interaction')->group(function () {
+    Route::get('/positions/{id}', [InteractionController::class, 'getAllByPageId']);
+    Route::post('/', [InteractionController::class, 'create']);
+    Route::get('/{id}', [InteractionController::class, 'getInteractionFull']);
 });

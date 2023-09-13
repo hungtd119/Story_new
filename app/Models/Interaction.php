@@ -11,9 +11,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Interaction extends Model
 {
+    public $_NAME = "Interaction";
+    public $_ID = "id";
+    public $_BG = "bg";
+    public $_BLINK = 'blink';
+    public $_PAGE_ID = 'page_id';
+    public $_IMAGE_ID = 'image_id';
+    public $_TEXT_ID = 'text_id';
     use HasFactory;
-    protected $table = 'interactions';
+    public $table = 'interactions';
     protected $primaryKey = 'id';
+    public $incrementing = false;
     public $timestamps = true;
     protected $fillable = ['id', 'bg', 'blink', 'page_id', 'image_id', 'text_id'];
     // protected $hidden = ['page_id','image_id','text_id'];

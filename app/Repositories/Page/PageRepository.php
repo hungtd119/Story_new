@@ -22,7 +22,11 @@ class PageRepository extends BaseService implements PageInterface
     public function getPageByStory($storyId, $limit, $offSet, $keyword)
     {
         try {
-            $pages = Page::with('image', 'texts.audio', 'texts.position', 'texts.position', 'interactions.positions', 'interactions.image', 'interactions.text.audio')->where('story_id', $storyId)->get();
+            $pages = Page::with('image', 'texts.audio', 'texts.position', 'texts.position', 'interactions.positions', 'interactions.image', 'interactions.text.audio')
+                ->limit($limit)
+                ->offSet($offSet)
+                ->where('story_id', $storyId)
+                ->get();
             // $pages = Page::query()
             //     ->with(['texts' => function ($query) {
             //         $query->select('text');
