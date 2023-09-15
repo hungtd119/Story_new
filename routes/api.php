@@ -11,6 +11,7 @@ use App\Http\Controllers\TextController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InteractionController;
+use App\Http\Controllers\PositionController;
 use App\Http\Middleware\CheckParentRecordText;
 
 /*
@@ -97,4 +98,7 @@ Route::prefix('interaction')->group(function () {
     Route::get('/positions/{id}', [InteractionController::class, 'getAllByPageId']);
     Route::post('/', [InteractionController::class, 'create']);
     Route::get('/{id}', [InteractionController::class, 'getInteractionFull']);
+});
+Route::prefix('position')->group(function () {
+    Route::post('/positions', [PositionController::class, 'createPositionsByInteraction']);
 });

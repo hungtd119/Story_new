@@ -10,6 +10,8 @@ use App\Repositories\Interaction\InteractionInterface;
 use App\Repositories\Interaction\InteractionRepository;
 use App\Repositories\Page\PageInterface;
 use App\Repositories\Page\PageRepository;
+use App\Repositories\Position\PositionInterface;
+use App\Repositories\Position\PositionRepository;
 use App\Repositories\Story\StoryInterface;
 use App\Repositories\Story\StoryRepository;
 use App\Repositories\Text\TextInterface;
@@ -31,6 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TextInterface::class, TextRepository::class);
         $this->app->bind(AudioInterface::class, AudioRepository::class);
         $this->app->bind(InteractionInterface::class, InteractionRepository::class);
+        $this->app->bind(PositionInterface::class, PositionRepository::class);
     }
 
     /**
