@@ -16,6 +16,8 @@ use App\Repositories\Story\StoryInterface;
 use App\Repositories\Story\StoryRepository;
 use App\Repositories\Text\TextInterface;
 use App\Repositories\Text\TextRepository;
+use App\Repositories\Textconfig\TextconfigInterface;
+use App\Repositories\Textconfig\TextconfigRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -34,6 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AudioInterface::class, AudioRepository::class);
         $this->app->bind(InteractionInterface::class, InteractionRepository::class);
         $this->app->bind(PositionInterface::class, PositionRepository::class);
+        $this->app->bind(TextconfigInterface::class, TextconfigRepository::class);
     }
 
     /**

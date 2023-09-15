@@ -12,6 +12,7 @@ use App\Http\Controllers\AudioController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\TextconfigController;
 use App\Http\Middleware\CheckParentRecordText;
 
 /*
@@ -101,4 +102,7 @@ Route::prefix('interaction')->group(function () {
 });
 Route::prefix('position')->group(function () {
     Route::post('/positions', [PositionController::class, 'createPositionsByInteraction']);
+});
+Route::prefix('textconfig')->group(function () {
+    Route::post('/', [TextconfigController::class, 'create']);
 });
