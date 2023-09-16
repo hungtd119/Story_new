@@ -154,4 +154,15 @@ class PageController extends Controller
         $page = $this->pageRepository->getPageToPlay($id);
         return $this->responseJson("Get page to play", $page);
     }
+    public function createPageWithText(Request $request)
+    {
+        $request->validate([
+            $this->page->_IMAGE_ID => 'required',
+            $this->page->_PAGE_NUMBER => 'required',
+            $this->page->_STORY_ID => 'required',
+        ]);
+        $dataInputs = $this->pageBaseService->getDataInput($request);
+        $page = $this->pageBaseService->store($dataInputs);
+        dd($dataInputs);
+    }
 }
