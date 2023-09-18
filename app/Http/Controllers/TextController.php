@@ -65,13 +65,11 @@ class TextController extends Controller
             throw $e;
         }
     }
-    public function create(TextStoreRequest $request)
+    public function create(Request $request)
     {
         // Validate Input
         $request->validate([
             $this->text->_TEXT => 'required',
-            $this->text->_ICON => 'required',
-            $this->text->_WORD_SYNC => 'required',
         ]);
         try {
             // Get data inputs

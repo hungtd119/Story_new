@@ -24,9 +24,7 @@ class InteractionController extends Controller
     {
         $request->validate([
             $this->interaction->_BG => 'required',
-            $this->interaction->_BLINK => 'required',
             $this->interaction->_PAGE_ID => 'required',
-            $this->interaction->_IMAGE_ID => 'required',
             $this->interaction->_TEXT_ID => 'required'
         ]);
         try {

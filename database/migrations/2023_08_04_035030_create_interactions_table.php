@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('interactions', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->string('bg');
-            $table->string('blink');
+            $table->string('blink')->default('blink')->nullable();
             $table->unsignedBigInteger('page_id');
-            $table->unsignedBigInteger('image_id');
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('text_id');
             $table->timestamps();
         });
