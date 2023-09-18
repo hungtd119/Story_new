@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->string('text');
             $table->string('icon');
-            $table->string('wordSync');
+            $table->string('wordSync', 500);
             $table->timestamps();
         });
     }

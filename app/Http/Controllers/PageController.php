@@ -74,6 +74,8 @@ class PageController extends Controller
         $request->validate([
             $this->page->_IMAGE_ID => 'required',
             $this->page->_PAGE_NUMBER => 'required',
+            $this->page->_WIDTH_DEVICE => 'required',
+            $this->page->_HEIGHT_DEVICE => 'required',
             $this->page->_STORY_ID => 'required',
         ]);
         try {

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('image_id');
             $table->integer('page_number');
+            $table->integer('width_device');
+            $table->integer('height_device');
             $table->unsignedBigInteger('story_id');
             $table->timestamps();
         });

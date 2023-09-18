@@ -22,10 +22,12 @@ class PageFactory extends Factory
     public function definition()
     {
         return [
-            'id'=>$this->faker->numerify("########"),
-            'image_id'=>Image::all()->random()->id,
-            'page_number'=>$this->faker->numerify,
-            'story_id'=>Story::all()->random()->id,
+            'id' => $this->faker->numerify("########"),
+            'image_id' => Image::all()->random()->id,
+            'page_number' => $this->faker->numerify,
+            'width_device' => $this->faker->numberBetween(999, 1900),
+            'height_device' => $this->faker->numberBetween(571, 1200),
+            'story_id' => Story::all()->random()->id,
         ];
     }
 }
