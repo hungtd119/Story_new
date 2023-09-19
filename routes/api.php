@@ -43,9 +43,9 @@ Route::prefix('story')->group(function () {
     Route::get('/find/{id}', [StoryController::class, 'findById']);
     Route::get('/detail/{id}', [StoryController::class, 'getStoryDetailById']);
     Route::delete('/{id}', [StoryController::class, 'delete']);
+    Route::put('/', [StoryController::class, 'update']);
     Route::middleware([CheckParentRecordImage::class])->group(function () {
         Route::post('/', [StoryController::class, 'create']);
-        Route::put('/', [StoryController::class, 'update']);
     });
     Route::middleware('auth:sanctum')->group(function () {
     });

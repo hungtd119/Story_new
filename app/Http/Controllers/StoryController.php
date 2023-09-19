@@ -96,11 +96,11 @@ class StoryController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            $this->story->_TITLE => 'required|string',
-            $this->story->_AUTHOR => 'required|string',
-            $this->story->_ILLUSTRATOR => 'required|string',
-            $this->story->_LEVEL => 'required',
-            $this->story->_COIN => 'required',
+            // $this->story->_TITLE => 'required|string',
+            // $this->story->_AUTHOR => 'required|string',
+            // $this->story->_ILLUSTRATOR => 'required|string',
+            // $this->story->_LEVEL => 'required',
+            // $this->story->_COIN => 'required',
         ]);
         try {
             // get data inputs

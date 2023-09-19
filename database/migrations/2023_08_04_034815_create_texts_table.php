@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->string('text');
             $table->string('icon')->nullable();
-            $table->string('wordSync', 500)->nullable();
+            $table->string('wordSync', 1000)->nullable();
             $table->timestamps();
         });
     }

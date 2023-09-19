@@ -84,11 +84,10 @@ class TextController extends Controller
             throw ErrorException::badRequest($e);
         }
     }
-    public function update(TextStoreRequest $request)
+    public function update(Request $request)
     {
         $request->validate([
             $this->text->_TEXT => 'required',
-            $this->text->_ICON => 'required',
             $this->text->_WORD_SYNC => 'required',
         ]);
         try {
