@@ -75,7 +75,7 @@ class PageRepository extends BaseService implements PageInterface
     public function getPageToConfig($id)
     {
         try {
-            $page = Page::query()->with("interactions.positions", "image", "interactions.text", 'texts')->find($id);
+            $page = Page::query()->with("interactions.positions", "image", "interactions.text.audio", 'texts.audio')->find($id);
             return $page;
         } catch (QueryException $exception) {
             throw ErrorException::queryFailed($exception->getMessage());
@@ -84,7 +84,7 @@ class PageRepository extends BaseService implements PageInterface
     public function getPageToPlay($id)
     {
         try {
-            $page = Page::query()->with("texts", "interactions.positions", "image", "interactions.text")->find($id);
+            $page = Page::query()->with("texts.audio", "interactions.positions", "image", "interactions.text.audio")->find($id);
             return $page;
         } catch (QueryException $exception) {
             throw ErrorException::queryFailed($exception->getMessage());

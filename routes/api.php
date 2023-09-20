@@ -84,12 +84,12 @@ Route::prefix('text')->group(function () {
 Route::prefix('audio')->group(function () {
     Route::get('/', [AudioController::class, 'index']);
     Route::get('/find/{id}', [AudioController::class, 'findById']);
+    Route::middleware([CheckParentRecordText::class])->group(function () {
+        Route::post('/', [AudioController::class, 'create']);
+        Route::put('/', [AudioController::class, 'update']);
+    });
     Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [AudioController::class, 'delete']);
-        Route::middleware([CheckParentRecordText::class])->group(function () {
-            Route::post('/', [AudioController::class, 'create']);
-            Route::put('/', [AudioController::class, 'update']);
-        });
     });
 });
 Route::prefix('image')->group(function () {
