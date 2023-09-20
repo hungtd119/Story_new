@@ -19,26 +19,14 @@ class AuthController extends Controller
     {
         $this->authRepository = $authRepository;
     }
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
         try {
-            $credentials = request(['email', 'password']);
-
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Unauthorized'
-                ]);
-            }
-
-            $user = User::where('email', $request->email)->first();
-
-            if (!Hash::check($request->password, $user->password, [])) {
-                throw new \Exception('Error in Login');
-            }
-
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
-
+            $tokenResult = $this->authRepository->login($request);
             return response()->json([
                 'status_code' => 200,
                 'access_token' => $tokenResult,
@@ -52,15 +40,15 @@ class AuthController extends Controller
             ]);
         }
     }
-    public function register(RegisterRequest $request)
+    public function register(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ]);
         try {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
-            ]);
-
+            $user = $this->authRepository->register($request);
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
