@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Audio\AudioInterface;
 use App\Repositories\Audio\AudioRepository;
+use App\Repositories\Auth\AuthInterface;
+use App\Repositories\Auth\AuthRepository;
 use App\Repositories\Helper\HelperInterface;
 use App\Repositories\Helper\HelperRepository;
 use App\Repositories\Interaction\InteractionInterface;
@@ -37,6 +39,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(InteractionInterface::class, InteractionRepository::class);
         $this->app->bind(PositionInterface::class, PositionRepository::class);
         $this->app->bind(TextconfigInterface::class, TextconfigRepository::class);
+        $this->app->bind(AuthInterface::class, AuthRepository::class);
     }
 
     /**

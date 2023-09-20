@@ -29,6 +29,7 @@ use App\Http\Middleware\CheckParentRecordText;
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/loadUser', [AuthController::class, 'loadUser']);
 });
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return "Ok";
