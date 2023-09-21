@@ -22,21 +22,15 @@ class Position extends Model
     public $_DRAG_START_X = 'dragStartX';
     public $_DRAG_START_Y = 'dragStartY';
     public $_INTERACTION_ID = 'interaction_id';
-    public $_TEXT_ID = 'text_id';
 
     use HasFactory;
     public $table = 'positions';
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = true;
-    protected $fillable = ['id', 'position_x', 'position_y', 'width', 'height', 'isDragging', 'isResizing', 'resizeDirect', 'dragStartX', 'dragStartY', 'interaction_id', 'text_id'];
-    protected $hidden = ['interaction_id', 'text_id'];
+    protected $fillable = ['id', 'position_x', 'position_y', 'width', 'height', 'isDragging', 'isResizing', 'resizeDirect', 'dragStartX', 'dragStartY', 'interaction_id'];
     public function interactions(): BelongsTo
     {
         return $this->belongsTo(Interaction::class, 'interaction_id');
-    }
-    public function text(): BelongsTo
-    {
-        return $this->belongsTo(Text::class);
     }
 }

@@ -23,7 +23,7 @@ class Text extends Model
     public $incrementing = false;
     public $timestamps = true;
     protected $hidden = ['pivot'];
-    protected $fillable = ['id', 'text', 'icon', 'wordSync'];
+    protected $fillable = ['id', 'text', 'wordSync'];
     // protected $hidden = ['audio_id', 'pivot'];
     public function audio(): HasOne
     {
@@ -36,9 +36,5 @@ class Text extends Model
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'text_config', 'text_id');
-    }
-    public  function position(): HasOne
-    {
-        return $this->hasOne(Position::class);
     }
 }

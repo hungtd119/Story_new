@@ -25,7 +25,6 @@ return new class extends Migration
             $table->integer('dragStartX');
             $table->integer('dragStartY');
             $table->unsignedBigInteger('interaction_id');
-            $table->unsignedBigInteger('text_id');
             $table->timestamps();
         });
     }

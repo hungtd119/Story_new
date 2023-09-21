@@ -27,17 +27,9 @@ class AuthController extends Controller
         ]);
         try {
             $tokenResult = $this->authRepository->login($request);
-            return response()->json([
-                'status_code' => 200,
-                'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
-            ]);
+            return $this->responseJson('Login success', $tokenResult);
         } catch (\Exception $error) {
-            return response()->json([
-                'status_code' => 500,
-                'message' => 'Error in Login',
-                'error' => $error,
-            ]);
+            return $this->responseJson('Login failed', $error);
         }
     }
     public function register(Request $request)

@@ -13,12 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('texts', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->string('text');
-            $table->string('wordSync', 1000)->nullable();
-            $table->timestamps();
-        });
+        //
     }
 
     /**
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('texts');
+        //
     }
 };

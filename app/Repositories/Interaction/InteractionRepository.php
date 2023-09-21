@@ -19,7 +19,7 @@ class InteractionRepository extends BaseService implements InteractionInterface
     public function getInteractionsByPageId($id)
     {
         try {
-            $interactions = Interaction::query()->with('positions.text.audio')->where('page_id', $id)->get();
+            $interactions = Interaction::query()->with('positions')->where('page_id', $id)->get();
             $count = Interaction::query()->where('page_id', $id)->count();
             return [
                 'interactions' => $interactions,

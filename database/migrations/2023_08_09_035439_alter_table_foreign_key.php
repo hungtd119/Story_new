@@ -13,23 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('positions',function (Blueprint $table){
+        Schema::table('positions', function (Blueprint $table) {
             $table->foreign('interaction_id')->references('id')->on('interactions')->onDelete('cascade');
+        });
+        Schema::table('audios', function (Blueprint $table) {
             $table->foreign('text_id')->references('id')->on('texts')->onDelete('cascade');
         });
-        Schema::table('audios',function (Blueprint $table){
-            $table->foreign('text_id')->references('id')->on('texts')->onDelete('cascade');
-        });
-        Schema::table('pages',function (Blueprint $table){
+        Schema::table('pages', function (Blueprint $table) {
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->foreign('story_id')->references('id')->on('stories')->onDelete('cascade');
         });
-        Schema::table('interactions',function (Blueprint $table){
+        Schema::table('interactions', function (Blueprint $table) {
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->foreign('text_id')->references('id')->on('texts')->onDelete('cascade');
         });
-        Schema::table('text_config',function (Blueprint $table){
+        Schema::table('text_config', function (Blueprint $table) {
             $table->foreign('text_id')->references('id')->on('texts')->onDelete('cascade');
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
         });
