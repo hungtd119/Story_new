@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
             $statusCode = $e->getCode();
         }
 
-//        $message = __('messages.errors.bad_request');
+        //        $message = __('messages.errors.bad_request');
         $message = $e->getMessage();
         $errors = null;
         switch (true) {
