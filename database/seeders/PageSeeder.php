@@ -15,6 +15,6 @@ class PageSeeder extends Seeder
      */
     public function run()
     {
-        Page::factory()->count(2)->create();
+        Page::factory(1)->create();
     }
 }

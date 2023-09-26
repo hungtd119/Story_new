@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stories', function (Blueprint $table) {
+        Schema::create('icons', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
+            $table->string('path');
             $table->string('title');
-            $table->unsignedBigInteger('image_id');
-            $table->string('author');
-            $table->string('illustrator');
-            $table->string('level');
-            $table->unsignedInteger('coin');
-            $table->integer('type')->default(0);
+            $table->unsignedBigInteger('text_id');
             $table->timestamps();
+            $table->foreign('text_id')->references('id')->on('texts')->onDelete('cascade');
         });
     }
 
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stories');
+        Schema::dropIfExists('icons');
     }
 };

@@ -25,7 +25,6 @@ return new class extends Migration
         });
         Schema::table('interactions', function (Blueprint $table) {
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->foreign('text_id')->references('id')->on('texts')->onDelete('cascade');
         });
         Schema::table('text_config', function (Blueprint $table) {

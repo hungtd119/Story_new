@@ -18,13 +18,14 @@ class Story extends Model
     public $_ILLUSTRATOR = 'illustrator';
     public $_LEVEL = 'level';
     public $_COIN = 'coin';
+    public $_TYPE = 'type';
 
     use HasFactory;
     public $table = 'stories';
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = true;
-    protected $fillable = ['id', 'title', 'image_id', 'author', 'illustrator', 'level', 'coin'];
+    protected $fillable = ['id', 'title', 'image_id', 'author', 'illustrator', 'level', 'coin', 'type'];
     // protected $hidden = ['image_id'];
     public function pages(): HasMany
     {

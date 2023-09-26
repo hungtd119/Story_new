@@ -15,6 +15,6 @@ class InteractionSeeder extends Seeder
      */
     public function run()
     {
-        Interaction::factory()->count(10)->create();
+        Interaction::factory(1)->create();
     }
 }

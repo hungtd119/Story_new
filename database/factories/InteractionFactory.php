@@ -22,12 +22,11 @@ class InteractionFactory extends Factory
     public function definition()
     {
         return [
-            'id'=>$this->faker->numerify("########"),
-            'bg'=>$this->faker->colorName(),
-            'blink'=>$this->faker->sentence,
-            'image_id'=>Image::all()->random()->id,
-            'page_id'=>Page::all()->random()->id,
-            'text_id'=>Text::all()->random()->id,
+            'id' => $this->faker->numerify("########"),
+            'bg' => $this->faker->colorName(),
+            'blink' => $this->faker->sentence,
+            'page_id' => Page::all()->random()->id,
+            'text_id' => Text::all()->random()->id,
         ];
     }
 }

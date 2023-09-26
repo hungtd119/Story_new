@@ -29,7 +29,6 @@ class PositionFactory extends Factory
             'resizeDirect' => $this->faker->text(),
             'dragStartX' => $this->faker->numerify("###"),
             'dragStartY' => $this->faker->numerify("###"),
-            'text_id' => Text::all()->random()->id,
             'interaction_id' => Interaction::all()->random()->id,
         ];
     }

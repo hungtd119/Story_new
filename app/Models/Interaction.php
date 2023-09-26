@@ -16,14 +16,13 @@ class Interaction extends Model
     public $_BG = "bg";
     public $_BLINK = 'blink';
     public $_PAGE_ID = 'page_id';
-    public $_IMAGE_ID = 'image_id';
     public $_TEXT_ID = 'text_id';
     use HasFactory;
     public $table = 'interactions';
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = true;
-    protected $fillable = ['id', 'bg', 'blink', 'page_id', 'image_id', 'text_id'];
+    protected $fillable = ['id', 'bg', 'blink', 'page_id', 'text_id'];
     // protected $hidden = ['page_id','image_id','text_id'];
     public function pages(): BelongsTo
     {
@@ -36,9 +35,5 @@ class Interaction extends Model
     public function text(): BelongsTo
     {
         return $this->belongsTo(Text::class, 'text_id');
-    }
-    public function image(): BelongsTo
-    {
-        return $this->belongsTo(Image::class, 'image_id');
     }
 }

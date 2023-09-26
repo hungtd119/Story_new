@@ -34,4 +34,9 @@ class StoryRepository extends BaseService implements StoryInterface
         $story = DB::table('stories')->select()->find($id);
         return ['story' => $story];
     }
+    public function getStoryTypeByPageId($id)
+    {
+        $storyType = Story::query()->where('id', '=', $id)->first('type');
+        return $storyType;
+    }
 }

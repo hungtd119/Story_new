@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             AudioSeeder::class,
             InteractionSeeder::class,
             PositionSeeder::class,
-            TextConfigSeeder::class
+            TextConfigSeeder::class,
+            IconSeeder::class
         ]);
     }
 }

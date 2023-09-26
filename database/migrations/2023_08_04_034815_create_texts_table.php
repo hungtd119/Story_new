@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('texts', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->string('text');
-            $table->string('wordSync', 1000)->nullable();
+            $table->string('wordSync', 5000)->nullable();
+            $table->boolean('isIcon')->default(false);
             $table->timestamps();
         });
     }

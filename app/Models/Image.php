@@ -25,10 +25,6 @@ class Image extends Model
     {
         return $this->hasOne(Page::class);
     }
-    public function interaction(): HasOne
-    {
-        return $this->hasOne(Interaction::class);
-    }
     public function stories(): HasOne
     {
         return $this->hasOne(Story::class);

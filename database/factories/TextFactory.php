@@ -20,10 +20,10 @@ class TextFactory extends Factory
     public function definition()
     {
         return [
-            'id'=>$this->faker->numerify("########"),
-            'text'=>$this->faker->sentence,
-            'icon'=>$this->faker->name,
-            'wordSync'=>$this->faker->sentence,
+            'id' => $this->faker->numerify("########"),
+            'text' => $this->faker->sentence,
+            'wordSync' => $this->faker->sentence,
+            'isIcon' => $this->faker->boolean,
         ];
     }
 }

@@ -14,7 +14,6 @@ class Text extends Model
     public $_NAME = 'Text';
     public $_ID = 'id';
     public $_TEXT = 'text';
-    public $_ICON = 'icon';
     public $_WORD_SYNC = 'wordSync';
 
     use HasFactory;
@@ -36,5 +35,9 @@ class Text extends Model
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'text_config', 'text_id');
+    }
+    public function icon(): HasOne
+    {
+        return $this->hasOne(Icon::class);
     }
 }

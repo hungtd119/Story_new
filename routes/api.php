@@ -43,6 +43,7 @@ Route::prefix('story')->group(function () {
     Route::get('/', [StoryController::class, 'index']);
     Route::get('/find/{id}', [StoryController::class, 'findById']);
     Route::get('/detail/{id}', [StoryController::class, 'getStoryDetailById']);
+    Route::get('/type', [StoryController::class, 'type']);
     Route::delete('/{id}', [StoryController::class, 'delete']);
     Route::put('/', [StoryController::class, 'update']);
     Route::middleware([CheckParentRecordImage::class])->group(function () {

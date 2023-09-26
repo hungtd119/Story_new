@@ -16,6 +16,6 @@ class TextConfigSeeder extends Seeder
      */
     public function run()
     {
-        Textconfig::factory()->count(10)->create();
+        Textconfig::factory(1)->create();
     }
 }

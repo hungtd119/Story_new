@@ -77,6 +77,7 @@ class StoryController extends Controller
             $this->story->_AUTHOR => 'required|string',
             $this->story->_ILLUSTRATOR => 'required|string',
             $this->story->_LEVEL => 'required',
+            $this->story->_TYPE => 'required',
             $this->story->_COIN => 'required',
         ]);
         try {
@@ -142,5 +143,14 @@ class StoryController extends Controller
             Log::error('get detail stories failed');
             throw $e;
         }
+    }
+    public function type(Request $request)
+    {
+        $id = $request->query('id');
+        if (!$id) {
+            throw ErrorException::notFound("Id not found");
+        }
+        $storyType = $this->storyRepository->getStoryTypeByPageId($id);
+        return $this->responseJson('get story type success', $storyType);
     }
 }

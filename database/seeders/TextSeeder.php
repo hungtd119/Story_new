@@ -15,6 +15,6 @@ class TextSeeder extends Seeder
      */
     public function run()
     {
-        Text::factory()->count(10)->create();
+        Text::factory(1)->create();
     }
 }

@@ -8,4 +8,5 @@ interface StoryInterface
 {
     public function getStoriesCard($limit, $offSet, $keyword);
     public function getStoryDetailById($id);
+    public function getStoryTypeByPageId($id);
 }
